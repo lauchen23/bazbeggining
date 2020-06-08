@@ -76,5 +76,6 @@ class Piro extends Phaser.Scene {
 
   leaveRoom(player,outside){
     this.scene.start('Port');
+    this.scene.stop('Piro');
   }
 };

@@ -11,6 +11,6 @@ let config =  {
         }
     },
 //LOADING UP DIFFERENT SCENES.
-  // scene:[Beginning, Map, Kavia, Taup, Tendro, Piro, Port, Rei, Omo, Glaion, Azadeh]
-  scene:[Port]
+  scene:[Beginning, Map, Piro]
+  // scene:[Port]
 };

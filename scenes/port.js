@@ -30,8 +30,7 @@ class Port extends Phaser.Scene {
     this.portmap = this.make.tilemap({ data: portmaps[0], tileWidth: 40, tileHeight: 40});
     this.tiles = this.portmap.addTilesetImage("porttile");
     this.layer = this.portmap.createDynamicLayer(0, this.tiles, 0, 0);
-    // this.portmap.setCollision([2,3]);
-    // this.physics.add.collider(this.player, this.layer);
+    this.portmap.setCollision([3]);
 
     this.add.image(900,300, 'inn');
     this.add.image(170,80, 'tree');
@@ -70,10 +69,12 @@ class Port extends Phaser.Scene {
     sprite11.setFrame(6)
     var sprite12 = this.add.sprite(100,500, 'fish');
     sprite12.setFrame(7)
-
+    
+    this.createSpeechBubble(200, 130, 160, 160, '"Hey there, come over here!"');
     this.player = this.physics.add.sprite(1150,450, 'baz');
     this.player.body.setAllowGravity(false);
     this.player.setCollideWorldBounds(true);
+
     //animations
     this.anims.create({
       key:'left',
@@ -112,6 +113,50 @@ class Port extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
   };
 
+  createSpeechBubble (x, y, width, height, quote)
+  {
+      var bubbleWidth = width;
+      var bubbleHeight = height;
+      var bubblePadding = 10;
+      var arrowHeight = bubbleHeight / 4;
+
+      var bubble = this.add.graphics({ x: x, y: y });
+
+      //  Bubble color
+      bubble.fillStyle(0xffffff, 1);
+
+      //  Bubble outline line style
+      bubble.lineStyle(4, 0x565656, 1);
+
+      //  Bubble shape and outline
+      bubble.strokeRoundedRect(0, 0, bubbleWidth, bubbleHeight, 16);
+      bubble.fillRoundedRect(0, 0, bubbleWidth, bubbleHeight, 16);
+
+      //  Calculate arrow coordinates
+      var point1X = Math.floor(bubbleWidth / 7);
+      var point1Y = bubbleHeight;
+      var point2X = Math.floor((bubbleWidth / 7) * 2);
+      var point2Y = bubbleHeight;
+      var point3X = Math.floor(bubbleWidth / 7);
+      var point3Y = Math.floor(bubbleHeight + arrowHeight);
+
+      //  Bubble arrow shadow
+      bubble.lineStyle(4, 0x222222, 0.5);
+      bubble.lineBetween(point2X - 1, point2Y + 6, point3X + 2, point3Y);
+
+      //  Bubble arrow fill
+      bubble.fillTriangle(point1X, point1Y, point2X, point2Y, point3X, point3Y);
+      bubble.lineStyle(2, 0x565656, 1);
+      bubble.lineBetween(point2X, point2Y, point3X, point3Y);
+      bubble.lineBetween(point1X, point1Y, point3X, point3Y);
+
+      var content = this.add.text(0, 0, quote, { fontFamily: 'Arial', fontSize: 20, color: '#000000', align: 'center', wordWrap: { width: bubbleWidth - (bubblePadding * 2) } });
+
+      var b = content.getBounds();
+
+      content.setPosition(bubble.x + (bubbleWidth / 2) - (b.width / 2), bubble.y + (bubbleHeight / 2) - (b.height / 2));
+    }
+
 
   update(){
     if (this.cursors.left.isDown)
@@ -124,9 +169,20 @@ class Port extends Phaser.Scene {
       this.player.setVelocityX(160);
       this.player.anims.play('right', true);
     }
+    else if (this.cursors.up.isDown)
+    {
+      this.player.setVelocityY(-160);
+      this.player.anims.play('up', true);
+    }
+    else if (this.cursors.down.isDown)
+    {
+      this.player.setVelocityY(160);
+      this.player.anims.play('down', true);
+    }
     else
     {
       this.player.setVelocityX(0);
+      this.player.setVelocityY(0);
         this.player.anims.play('turn', true);
       }
     }
