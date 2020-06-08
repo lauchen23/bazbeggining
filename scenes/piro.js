@@ -24,6 +24,7 @@ class Piro extends Phaser.Scene {
     this.player = this.physics.add.sprite(100,450, 'baz');
     this.player.body.setAllowGravity(false);
     this.player.setCollideWorldBounds(true);
+
     this.anims.create({
       key:'left',
       frames: this.anims.generateFrameNumbers('baz', {start: 16, end:20 }),
@@ -43,6 +44,7 @@ class Piro extends Phaser.Scene {
       frameRate:10,
       repeat: -1
     });
+
     this.physics.add.collider(this.player, this.layer);
   //ADD CURSORS.
     this.cursors = this.input.keyboard.createCursorKeys();
