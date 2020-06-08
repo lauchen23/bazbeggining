@@ -26,7 +26,7 @@ class Piro extends Phaser.Scene {
     this.player.setCollideWorldBounds(true);
     this.anims.create({
       key:'left',
-      frames: this.anims.generateFrameNumbers('baz', {start: 7, end:10 }),
+      frames: this.anims.generateFrameNumbers('baz', {start: 16, end:20 }),
       frameRate: 10,
       repeat: -1
     });
@@ -39,7 +39,7 @@ class Piro extends Phaser.Scene {
 
     this.anims.create({
       key:'right',
-      frames: this.anims.generateFrameNumbers('baz', { start: 1, end: 5 }),
+      frames: this.anims.generateFrameNumbers('baz', { start: 6, end: 10 }),
       frameRate:10,
       repeat: -1
     });
